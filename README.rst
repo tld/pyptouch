@@ -2,9 +2,17 @@
 pyptouch
 ========
 
+.. image:: https://img.shields.io/travis/tld/pyptouch.svg
+        :target: https://travis-ci.org/tld/pyptouch
+
+.. image:: https://img.shields.io/pypi/v/pyptouch.svg
+        :target: https://pypi.python.org/pypi/pyptouch
+
 "Driver" for Brothers Q-Touch series of label printers, providing PDF/PS/PNG to
 native files for the printers, that can be fed directly to the printers on
 JetDirect port (TCP 9100).
+
+Documentation: https://pyptouch.readthedocs.org
 
 The good:
  * Free software: BSD license
