@@ -5,8 +5,8 @@ pyptouch
 .. image:: https://img.shields.io/travis/tld/pyptouch.svg
         :target: https://travis-ci.org/tld/pyptouch
 
-.. image:: https://img.shields.io/pypi/v/pyptouch.svg
-        :target: https://pypi.python.org/pypi/pyptouch
+.. .. image:: https://img.shields.io/pypi/v/pyptouch.svg
+          :target: https://pypi.python.org/pypi/pyptouch
 
 =======================================================================================
 Code is written, but in the process of cleaning it up while adding it to this repo.
