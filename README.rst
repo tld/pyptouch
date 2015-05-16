@@ -8,6 +8,9 @@ pyptouch
 .. image:: https://img.shields.io/pypi/v/pyptouch.svg
         :target: https://pypi.python.org/pypi/pyptouch
 
+NOTE; In the process of moving things into this repo.  Please come back in a
+couple of weeks.
+
 "Driver" for Brothers Q-Touch series of label printers, providing PDF/PS/PNG to
 native files for the printers, that can be fed directly to the printers on
 JetDirect port (TCP 9100).
@@ -16,8 +19,8 @@ Documentation: https://pyptouch.readthedocs.org
 
 The good:
  * Free software: BSD license
- * Usable as a Python-module
  * Can be used directly from command line
+ * Or as a Python-module
  * Can also inspect ptouch-blobs, and decode to PNG
 
 The bad:
