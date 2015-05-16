@@ -9,8 +9,12 @@ pyptouch
         :target: https://pypi.python.org/pypi/pyptouch
 
 =======================================================================================
-In the process of moving things into this repo.  Please come back in a couple of weeks.
+Code is written, but in the process of cleaning it up while adding it to this repo.
 =======================================================================================
+
+================================
+Please come back in a few weeks.
+================================
 
 "Driver" for Brothers Q-Touch series of label printers, providing PDF/PS/PNG to
 native files for the printers, that can be fed directly to the printers on
