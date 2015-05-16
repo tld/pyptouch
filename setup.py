@@ -7,6 +7,7 @@ from setuptools.command.test import test as TestCommand
 
 import pyptouch
 
+
 class Tox(TestCommand):
 
     def finalize_options(self):
@@ -15,7 +16,7 @@ class Tox(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import tox
         errcode = tox.cmdline(self.test_args)
         sys.exit(errcode)
@@ -75,6 +76,6 @@ setup(
     extras_require={
         'png':      ['Pillow>=2.6']
     },
-    #test_suite='tests',
+    # test_suite='tests',
     tests_require=['nose']
 )
