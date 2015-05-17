@@ -20,7 +20,7 @@ Please come back in a few weeks.
 native files for the printers, that can be fed directly to the printers on
 JetDirect port (TCP 9100).
 
-Documentation: https://pyptouch.readthedocs.org
+.. Documentation: https://pyptouch.readthedocs.org
 
 The good:
  * Free software: BSD license
