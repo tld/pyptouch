@@ -14,13 +14,28 @@ from __future__ import print_function
 import io
 from binascii import unhexlify
 
-cmds = {}
+subs = {}  # Dictionary containing subscriptions to tags.
+
+cmds = {}  # Dictionary containing subscriptions to commands.
 
 
-# Keeping a dictionary, where we map command-bytes to command-handlers.
-# Decorators on the handlers map their command-bytes to them, so we keep
-# everything for the handler together with it's definition.
+def sub(byte):
+    """Decorator allowing for easy subscription to tags in the stream.
+
+    Args:
+        byte (str): Byte to subscribe the decorated callback to.
+    """
+    def sub_dec(c):
+        subs[unhexlify(byte)] = c
+    return sub_dec
+
+
 def cmd(byte):
+    """Decorator allowing for easy subscription of command-tags in stream."
+
+    Args:
+        byte (str): Byte to subscribe the decorated callback to."
+    """
     def cmd_sub(c):
         cmds[unhexlify(byte)] = c
     return cmd_sub
@@ -49,27 +64,62 @@ class PTReader(object):
 
         self._input.seek(0)
 
-    @cmd('1B')  # 1B40 == initialize, 1B69 == other command
-    def cmd_(self):
-        print("--> cmd_")
+    @sub('1B')  # 1B40 == initialize, 1B69 == other command
+    def sub_cmd(self):
+        print("--> sub_cmd")
 
-    @cmd('4D')
-    def cmd_compression(self):
-        print("--> cmd_compression")
+    @sub('4D')
+    def sub_compression(self):
+        print("--> sub_compression")
 
-    @cmd('67')
-    def cmd_raster(self):
-        print("--> cmd_raster")
+    @sub('67')
+    def sub_raster(self):
+        print("--> sub_raster")
 
-    @cmd('1A')
-    def cmd_print_eject(self):
-        print("--> cmd_print_eject")
+    @sub('1A')
+    def sub_print_eject(self):
+        print("--> sub_print_eject")
 
-    @cmd('FF')
-    def cmd_print_no_eject(self):
-        print("--> cmd_print_no_eject")
+    @sub('FF')
+    def sub_print_no_eject(self):
+        print("--> sub_print_no_eject")
+
+    @cmd('40')
+    def cmd_initialize(self):
+        """Callback handling initialization of printer."""
+        print("--> cmd_initialize")
+
+    @cmd('6961')
+    def cmd_mode(self):
+        """Callback handling mode-setting of printer."""
+        print("--> cmd_mode")
+
+    @cmd('697A')
+    def cmd_set_media_and_quality(self):
+        """Callback for setting print-media and -quality."""
+        print("--> cmd_set_media_and_quality")
+
+    @cmd('694D')
+    def cmd_set_mode(self):
+        """Callback handling set mode."""
+        print("--> cmd_set_mode")
+
+    @cmd('6941')
+    def cmd_cut_every(self):
+        """Callback handling cut-settings."""
+        print("--> cmd_cut_every")
+
+    @cmd('694B')
+    def cmd_cut_type(self):
+        """Callback handling cut-type."""
+        print("--> cmd_cut_type")
+
+    @cmd('6964')
+    def cmd_set_margins(self):
+        """Callback handling setting of margins."""
+        print("--> cmd_set_margins")
 
 
 if __name__ == '__main__':
     ptr = PTReader()
-    print("cmds: %r" % cmds)
+    print("subs: %r" % subs)
