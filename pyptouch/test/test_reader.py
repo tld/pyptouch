@@ -8,18 +8,23 @@ test_pyptouch
 Tests for `pyptouch` module.
 """
 
+from __future__ import print_function
+
+import os
 import unittest
 
-# from pyptouch import reader
+from pyptouch.reader import PTReader
+
+testdir = os.path.dirname(__file__)
 
 
 class TestPTReader(unittest.TestCase):
 
     def setUp(self):  # NOQA
-        pass
+        self.ptr = PTReader(os.path.join(testdir, "python.ptouch"))
 
-    def test_something(self):
-        pass
+    def test_read(self):
+        self.ptr.read()
 
     def tearDown(self):  # NOQA
         pass
