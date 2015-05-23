@@ -90,8 +90,10 @@ class PTReader(object):
         if input:
             self.__init_input(input)
 
-        while self._input.readable():
+        while True:
             op = self._input.read(1)
+            if not op:  # EOF
+                break
             dprint("--> op: %r" % op)
             if op in subs:
                 dprint("  --> found!")
