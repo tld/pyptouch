@@ -61,6 +61,7 @@ class PTReader(object):
         """
 
         self.preamble = 0
+        self.init = 0
 
         if input:
             self.__init_input(input)
@@ -147,6 +148,7 @@ class PTReader(object):
             print("--> cmd_initialize (%r bytes of preamble)" % self.preamble)
         else:
             print("--> cmd_initialize (no preamble)")
+        self.init += 1
 
     @cmd('6961')
     def cmd_mode(self):
