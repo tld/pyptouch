@@ -12,11 +12,17 @@
 from __future__ import print_function
 
 import io
-from binascii import unhexlify
+from binascii import unhexlify, hexlify
 
 subs = {}  # Dictionary containing subscriptions to tags.
-
 cmds = {}  # Dictionary containing subscriptions to commands.
+
+debug = False
+
+
+def dprint(string):
+    if debug:
+        print(string)
 
 
 def sub(byte):
@@ -54,19 +60,67 @@ class PTReader(object):
             be reading our input-data from.
         """
 
+        self.preamble = 0
+
         if input:
-            if type(input) in [str, unicode]:
-                self._input = io.open(input)
-            else:
-                self._input = input
+            self.__init_input(input)
 
-    def read(self, input=None):
+    def __init_input(self, input):
+        """Initialize a new input-stream, called from __init__ and read().
 
+        Args:
+            input (str or file): Path of file, or file-like object, that
+            reader will be initialized to read from.
+        """
+
+        if type(input) in [str]:  # unicode?
+            self._input = io.open(input, 'rb')
+        else:
+            self._input = input
         self._input.seek(0)
 
-    @sub('1B')  # 1B40 == initialize, 1B69 == other command
+    def read(self, input=None):
+        """Read file, dispatch handlers based on how things are set up.
+
+        Args:
+            input (str or file): Optionally provide a file (path or object)
+            that gets read from.
+        """
+
+        if input:
+            self.__init_input(input)
+
+        while self._input.readable():
+            op = self._input.read(1)
+            dprint("--> op: %r" % op)
+            if op in subs:
+                dprint("  --> found!")
+                subs[op](self)
+            else:
+                dprint(" --> op not found: %r" % op)
+
+    @sub('00')  # preamble
+    def sub_pre(self):
+        """Preamble, can be safely ignored.  It's just a burst of zeros, to
+        clear comamnd-buffer on serial-printers."""
+        dprint("--> sub_pre")
+        self.preamble += 1
+
+    @sub('1B')
     def sub_cmd(self):
-        print("--> sub_cmd")
+        dprint("--> sub_cmd")
+        cmd = self._input.read(2)
+        if cmd in cmds:
+            dprint("  --> found 2-byte cmd: %r" % hexlify(cmd))
+            cmds[cmd](self)
+        else:
+            if cmd[0] in cmds:
+                # one-byte command, but read two, so seek one back.
+                self._input.seek(-1, io.SEEK_CUR)
+                dprint(" --> found 1-byte cmd: %r" % hexlify(cmd[0]))
+                cmds[cmd[0]](self)
+            else:
+                dprint("  --> UNKNOWN cmd: %r" % hexlify(cmd))
 
     @sub('4D')
     def sub_compression(self):
@@ -87,7 +141,10 @@ class PTReader(object):
     @cmd('40')
     def cmd_initialize(self):
         """Callback handling initialization of printer."""
-        print("--> cmd_initialize")
+        if self.preamble:
+            print("--> cmd_initialize (%r bytes of preamble)" % self.preamble)
+        else:
+            print("--> cmd_initialize (no preamble)")
 
     @cmd('6961')
     def cmd_mode(self):
@@ -122,4 +179,11 @@ class PTReader(object):
 
 if __name__ == '__main__':
     ptr = PTReader()
+    import os
+    ptr.read(os.path.join(os.path.dirname(__file__),
+                          'test',
+                          'python.ptouch'))
+    print()
+    print()
+    print()
     print("subs: %r" % subs)
