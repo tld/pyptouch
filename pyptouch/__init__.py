@@ -7,4 +7,4 @@
 
 __author__ = 'Terje Elde'
 __email__ = 'terje@elde.net'
-__version__ = '0.0.1-dev0'
+__version__ = '0.0.1.dev0'
