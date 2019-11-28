@@ -5,6 +5,9 @@ pyptouch
 .. image:: https://img.shields.io/travis/tld/pyptouch.svg
         :target: https://travis-ci.org/tld/pyptouch
 
+.. image:: https://img.shields.io/github/license/tld/pyptouch.svg
+        :target: https://img.shields.io/github/license/tld/pyptouch
+
 .. .. image:: https://img.shields.io/pypi/v/pyptouch.svg
           :target: https://pypi.python.org/pypi/pyptouch
 
