@@ -11,6 +11,8 @@ pyptouch
 .. image:: https://img.shields.io/github/license/tld/pyptouch.svg
         :target: https://github.com/tld/pyptouch/blob/master/LICENSE
 
+.. image:: https://img.shields.io/badge/ready%20for%20use-no-red
+
 .. .. image:: https://img.shields.io/pypi/v/pyptouch.svg
           :target: https://pypi.python.org/pypi/pyptouch
 
