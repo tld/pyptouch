@@ -58,6 +58,3 @@ Give it directly to the printer:
 
 Usage - module
 --------------
-
-
-

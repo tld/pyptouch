@@ -7,4 +7,3 @@ History
 ----------------
 
 * First version published to GitHub.
-
