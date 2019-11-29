@@ -10,4 +10,3 @@ Or, if you have virtualenvwrapper installed::
 
     $ mkvirtualenv pyptouch
     $ pip install pyptouch
-
